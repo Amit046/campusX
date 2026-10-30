@@ -6,7 +6,9 @@ const { notFound, errorHandler } = require('./middleware/errorHandler');
 
 function createApp() {
   const app = express();
-  app.use(cors({ origin: (process.env.CLIENT_ORIGIN || 'http://localhost:5173').split(',') }));
+ app.use(cors({
+  origin: process.env.CLIENT_ORIGIN?.trim() || 'http://localhost:5173'
+})); 
   app.use(express.json({ limit: '1mb' }));
   app.use(mongoSanitize()); // strips $ and . operators from user input (NoSQL injection protection)
 
